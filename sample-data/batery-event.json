@@ -1,0 +1,9 @@
+{
+  "eventId": "battery-2026-001",
+  "flightId": "flight-2026-001",
+  "batterySerialNumber": "DJI-BATTERY-REFERENCE-001",
+  "timestamp": "2026-05-30T15:10:00Z",
+  "batteryPercent": 58,
+  "temperatureCelsius": 34.2,
+  "cycleCount": 3
+}

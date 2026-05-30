@@ -1,0 +1,142 @@
+openapi: 3.0.3
+
+info:
+  title: Drone Telemetry API
+  version: 1.0.0
+  description: API contract for UAV flight session and telemetry event ingestion.
+
+paths:
+  /api/v1/flights:
+    post:
+      summary: Create flight session
+      operationId: createFlightSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlightSession'
+      responses:
+        "201":
+          description: Flight session created
+
+    get:
+      summary: List flight sessions
+      operationId: listFlightSessions
+      responses:
+        "200":
+          description: Flight sessions returned
+
+  /api/v1/flights/{flightId}/complete:
+    post:
+      summary: Complete flight session
+      operationId: completeFlightSession
+      parameters:
+        - name: flightId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Flight session completed
+
+  /api/v1/telemetry:
+    post:
+      summary: Submit telemetry event
+      operationId: submitTelemetryEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TelemetryEvent'
+      responses:
+        "202":
+          description: Telemetry event accepted
+
+  /api/v1/battery-events:
+    post:
+      summary: Submit battery event
+      operationId: submitBatteryEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatteryEvent'
+      responses:
+        "202":
+          description: Battery event accepted
+
+components:
+  schemas:
+    FlightSession:
+      type: object
+      properties:
+        flightId:
+          type: string
+        deviceId:
+          type: string
+        operatorId:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+        endedAt:
+          type: string
+          format: date-time
+        durationSeconds:
+          type: integer
+        location:
+          type: string
+        purpose:
+          type: string
+        status:
+          type: string
+          enum:
+            - IN_PROGRESS
+            - COMPLETED
+            - CANCELLED
+
+    TelemetryEvent:
+      type: object
+      properties:
+        eventId:
+          type: string
+        flightId:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        altitudeMeters:
+          type: number
+        distanceMeters:
+          type: number
+        speedMs:
+          type: number
+        batteryPercent:
+          type: integer
+        gpsSatellites:
+          type: integer
+        signalQuality:
+          type: string
+
+    BatteryEvent:
+      type: object
+      properties:
+        eventId:
+          type: string
+        flightId:
+          type: string
+        batterySerialNumber:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        batteryPercent:
+          type: integer
+        temperatureCelsius:
+          type: number
+        cycleCount:
+          type: integer
