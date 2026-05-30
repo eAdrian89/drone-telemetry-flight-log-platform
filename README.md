@@ -36,4 +36,4 @@ Out of scope for MVP:
 - production flight automation
 
 ## Architecture
-//TODO
+<img width="2409" height="356" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/15bc6e69-d291-4af6-a97b-879c3da6810e" />
